@@ -1,23 +1,66 @@
-$(document).ready(function(){
-      // Al cargar la página, ocultamos las cortinas
-      $('.left-curtain').css('width', '0%');
-      $('.right-curtain').css('width', '0%');
+// autor: Marco Barría
+
+ $(window).scroll(function () {   
+       var scr = $(window).scrollTop(),
+       		C = $('#contenedor'),
+  	  		A = $('#abrir'),
+  	  		E = $('#carta'),
+					F = $('#carta hgroup h2'),
+  	  		P = $('#perspectiva');
     
-      $('.valentines-day').click(function(){
-        // Animación de desvanecimiento de los elementos del sobre
-        $('.envelope').css({'animation':'fall 3s linear 1', '-webkit-animation':'fall 3s linear 1'});
-        $('.envelope').fadeOut(800, function() {
-          // Ocultar elementos dentro de .valentines-day
-          $('.valentines-day .heart, .valentines-day .text, .valentines-day .front').hide();
-          
-    
-          // Hacer visible la carta con una animación ondulante
-          $('#card').css({'visibility':'visible', 'opacity': 0, 'transform': 'scale(0.1)'});
-          $('#card').animate({'opacity': 1}, {duration: 1000, step: function(now, fx) {
-            var scale = 1 + Math.sin(now * Math.PI) * 0.1; // Calculamos la escala basada en la función seno
-            $(this).css('transform', 'scale(' + scale + ')');
-          }}); // Animación de ondulación
-        });
-      });
+    	// giro y abertura
+     	if (scr >= 100) {
+				C.css({
+					'transition':'all 1s',
+					'transform':'rotateY(180deg)'
+				});
+				A.css({
+					'transition':'all 1s .5s',
+					'transform':'rotateX(180deg)',
+					'z-index': '0'
+				});
+     	}
+     	// cerrado y giro
+     	else if (scr <= 100) {
+				C.css({
+					'transition':'all 1s .5s',
+					'transform':'rotateY(0deg)'
+				});
+				A.css({
+					'transition':'all 1s',
+					'transform':'rotateX(0deg)',
+					'z-index': '10'
+				});  
+     	}
+     	// Sobre trasladoY / carta
+     	if (scr >= 500) {
+				E.css({
+					'transition':'all .5s 1s',
+					'top':'-550px',
+					'height':'500px'
+				});
+     		P.css({
+     			'transition':'all 1s',
+     			'transform':'translateY(450px)'
+     		});
+				F.css({
+     			'transition':'all 1s',
+     			'transform':'rotateZ(180deg)'
+				});
+     	}
+     	// Sobre position original / guardado carta
+     	else if (scr <= 500) {
+				E.css({
+					'transition':'all .5s',
+					'top':'3px',
+					'height':'200px'
+				});
+     		P.css({
+     			'transform':'translateY(0px)'
+     		});
+				F.css({
+     			'transform':'rotateZ(0deg)'
+				});
+     	}
     });
     
